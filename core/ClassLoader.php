@@ -29,16 +29,12 @@ class ClassLoader
      * loadClassメソッドはオートロード時にPHPから自動的に呼び出され、クラスファイルの読み込みを
      * 行う処理です。
      */
-    public function loadClass($class)
+    public function loadClass($allClasses)
     {
-        //foreach ($this->dirs[0] as $file) {
-            // var_dump($class);
-            //$file = $dir . '/' . $class . '.php';
-           // var_dump($file);
-           if (is_readable($class)) {
+        foreach ($allClasses as $class) {
+            if (is_readable($class)) {
                 require_once $class;
-              //  return;
             }
-       // }
+        }
     }
 }

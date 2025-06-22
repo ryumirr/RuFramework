@@ -23,7 +23,7 @@ class Router
                 if (0 === strpos($token, ':')) {
                     $name = substr($token, 1);
                     // 正規表現の形式に変換
-                    $token = '(?P<)' . $name . '>[^/]+)';
+                    $token = '(?P<' . $name . '>[^/]+)';
                 }
                 $tokens[$index] = $token;
             }
@@ -61,7 +61,9 @@ class Router
 
     private function getModuleNameRequest()
     {
-        $requestUrl = substr($_SERVER['REQUEST_URI'], 6);
-        return substr($requestUrl, strpos($requestUrl, '/'), strpos($requestUrl, '/', 1));
+        $requestUrl = $_SERVER['REQUEST_URI'];
+        $start = strpos($requestUrl, '/');
+        $end = strpos($requestUrl, '/', $start + 1);
+        return substr($requestUrl, $start, $end - $start);
     }
 }

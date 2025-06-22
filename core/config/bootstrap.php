@@ -10,22 +10,16 @@ require 'core/ClassLoader.php';
 
 $classLoader = new ClassLoader();
 
-// ユーザー側
-$classes = glob(dirname(__FILE__, 3) . '/src/*/*.php');
-$classesInner = glob(dirname(__FILE__, 3) . '/src/*/*/*.php');
-$newClasses = array_merge($classesInner, $classes);
-
 // core側
 $classes = glob(dirname(__FILE__, 2) . '/src/*/*.php');
 $classesInner = glob(dirname(__FILE__, 2) . '/src/*/*/*.php');
- 
-// 合体
-$allClasses = array_merge($newClasses, $classesInner, $classes);
+$newClasses = array_merge($classes, $classesInner);
+$classLoader->loadClass($newClasses);
 
-require 'core/src/Http/Response/ApiResponse.php';
-require 'core/src/Controllers/Controller.php';
+// ユーザー側
+$classes = glob(dirname(__FILE__, 3) . '/src/*/*.php');
+$classesInner = glob(dirname(__FILE__, 3) . '/src/*/*/*.php');
+$allClasses = array_merge($classesInner, $classes);
+
 require 'src/Application/Application.php';
-
-foreach ($allClasses as $class) {
-    $classLoader->loadClass($class);
-}
+$classLoader->loadClass($allClasses);

@@ -10,19 +10,18 @@ class DbManager
     private string $password;
     private ?array $options;
 
-    public function __construct($dsn = '', $user = '', $password = '', $options = null)
+    public function __construct(string $dsn = '', string $user = '', string $password = '', ?array $options = null)
     {
         // 1つのオプションでも空っぽなら、基本オプションに入れ替えるw
         if (!$dsn) {
-            throw new \RuntimeException('dns, id, password is missing :(');
-        }
-        if (!$user || !$password) {
+            [$dsn, $user, $password] = $this->getDefaultOption();
+        } elseif (!$user || !$password) {
             [, $user, $password] = $this->getDefaultOption();
         }
         $this->dsn = $dsn;
         $this->user = $user;
-        $this->password = $password;
-        $this->dbManager = new PDO($this->dsn, $this->user, $this->password, $this->$options);
+        $this->options = $options ?? [];
+        $this->dbManager = new \PDO($this->dsn, $this->user, $this->password, $this->options);
     }
     public function clearPdoMg()
     {
@@ -38,6 +37,6 @@ class DbManager
 
     public function getDefaultOption()
     {
-        return ['mysql:dbname=testdb;host=127.0.0.1', 'rurering', 'dbpass'];
+        return ['mysql:dbname=testdb;host=127.0.0.1', 'rrr', 'dbpass'];
     }
 }

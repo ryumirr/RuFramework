@@ -31,14 +31,13 @@ abstract class Application
         $this->_request = new Request($this->_parameters);
         $this->router = new Router($this->registerRoutes());
         //$this->dbManager = new DbManager();
-        echo 'initialize テスト！' . "\n";
     }
 
     public function run()
     {
         $params = $this->router->resolve($this->_request->getPathInfo());
         if ($params === false) {
-            throw new \RuntimeException('Missmatching URL');
+            throw new \RuntimeException('Missmatching URL :X ');
         }
         $controller = $params['controller'];
         $action = $params['action'];

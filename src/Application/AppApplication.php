@@ -6,7 +6,6 @@ use src\Controllers\TestController;
 
 class AppApplication extends Application
 {
-    // protected array $_availableActions = ['test'];
     protected function registerRoutes()
     {
         return [
